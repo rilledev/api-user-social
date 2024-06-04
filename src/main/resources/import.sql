@@ -1,6 +1,20 @@
--- This file allow to write SQL commands that will be emitted in test and dev.
--- The commands are commented as their support depends of the database
--- insert into myentity (id, field) values(1, 'field-1');
--- insert into myentity (id, field) values(2, 'field-2');
--- insert into myentity (id, field) values(3, 'field-3');
--- alter sequence myentity_seq restart with 4;
+CREATE DATABASE quarkus_social;
+
+CREATE TABLE USERS (
+	id bigserial not null primary key,
+	name varchar(100) not null,
+	age integer not null
+);
+
+CREATE TABLE POSTS (
+    id bigserial not null primary key,
+    post_text varchar(150) not null,
+    dateTime timestamp not null,
+    user_id bigint not null references USERS(id)
+);
+
+CREATE TABLE FOLLOWERS (
+	id bigserial not null primary key,
+	user_id bigint not null references USERS(id),
+	follower_id bigint not null references USERS(id)
+);
